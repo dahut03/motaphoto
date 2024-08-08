@@ -79,5 +79,24 @@ if ( 'fullscreen' === oceanwp_mobile_menu_style() ) {
 ?>
 
 <?php wp_footer(); ?>
+<?php include('templates_part/contact_modal.php'); ?>
+
+
+
+
+<div class="footer-menu-container">
+
+    <?php
+    wp_nav_menu(array(
+        'theme_location' => 'footer-menu', // Assurez-vous de remplacer 'footer-menu' par l'emplacement de menu que vous avez configuré
+        'container' => 'nav',
+        'container_class' => 'footer-nav',
+        'menu_class' => 'footer-menu'
+    ));
+    ?>
+
+</div>
+
+
 </body>
 </html>

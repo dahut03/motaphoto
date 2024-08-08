@@ -32,7 +32,7 @@
 			<?php do_action( 'ocean_top_bar' ); ?>
 
 			<?php do_action( 'ocean_header' ); ?>
-
+			<?php include('templates_part/contact_modal.php'); ?>
 			<?php do_action( 'ocean_before_main' ); ?>
 
 			<main id="main" class="site-main clr"<?php oceanwp_schema_markup( 'main' ); ?> role="main">

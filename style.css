@@ -11,3 +11,160 @@ Updated: 2024-07-23 02:47:09
 
 */
 
+/* Supprimer le cadre autour des éléments de menu lors du clic */
+.menu-item a:focus, 
+.menu-item a:active, 
+.menu-item a
+{
+    outline: 0px !important;
+    outline: none !important;
+}
+
+#footer-bottom a, #footer-bottom #footer-bottom-menu a {
+    color: #020202;
+    margin-right: 40px;
+    content: none !important;
+  }
+
+  #footer-bottom #footer-bottom-menu li::after {
+    content: none;
+}
+
+.footer-menu-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Couleur de fond, vous pouvez la changer */
+    text-align: center; /* Centrer le contenu du conteneur */
+    padding: 10px 0; /* Ajouter du padding si nécessaire */
+    border-top: 1px solid #000; /* Ajouter un border en haut */
+    z-index: 1000; /* S'assurer que le menu reste au-dessus des autres éléments */
+}
+
+.footer-menu-container .footer-nav {
+    display: inline-block; /* Permettre au menu de s'afficher en ligne */
+}
+
+.footer-menu {
+    list-style: none; /* Supprimer les puces */
+    padding: 0;
+    margin: 0;
+}
+
+.footer-menu li {
+    display: inline; /* Afficher les éléments du menu en ligne */
+    margin-right: 15px; /* Ajouter de l'espace entre les éléments */
+}
+
+.footer-menu li:last-child {
+    margin-right: 0; /* Supprimer l'espace après le dernier élément */
+}
+
+.footer-menu a {
+    text-decoration: none; /* Supprimer la décoration des liens */
+    color: inherit; /* Utiliser la couleur du texte par défaut */
+}
+
+.menu-item.active {
+    color: #E00000;
+  }
+
+#scroll-top {
+    z-index: 2000;
+}
+
+
+  #site-navigation-wrap .dropdown-menu > .current-menu-item > a{
+    color:#E00000;
+}
+
+#site-logo #site-logo-inner a {
+    background-color: rgba(0,0,0,0) !important;
+    outline: 0px !important;
+    outline: none !important;
+  }
+
+  .wpforms-container .wpforms-form .wpforms-field-label{
+    text-align: left;
+    margin-left: 150px;
+  }
+
+  div.wpforms-container-full .wpforms-form .wpforms-submit-container {
+    text-align: center !important;
+  }
+
+  div.wpforms-container-full input[type="email"] {
+    border-radius: 8px !important;
+    width: 263px;
+    margin: 0 auto
+  }
+
+  div.wpforms-container-full input[type="text"] {
+    border-radius: 8px !important;
+    width: 263px;
+    margin: 0 auto
+  }
+
+  .wpforms-container .wpforms-form textarea {
+    border-radius: 8px !important;
+    width: 263px;
+    margin: 0 auto
+  }
+
+  .e-con > .e-con-inner > .elementor-widget > .elementor-widget-container {
+    width: 263px;
+  }
+
+  div.wpforms-container-full button[type="submit"]{
+    width: 263px;
+  }
+
+
+
+  /* Styles de la modale */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Contenu de la modale */
+.modal-content {
+  background-color: #fff;
+  background-image: url(images/Contact_header.png);
+  background-repeat: no-repeat;
+  margin: 15% auto;
+  padding: 20px;
+  border: 5px solid #000000;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  padding-top: 130px;
+  background-position: top;
+  background-position-y: 30px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+.dropdown-menu * {
+  padding: 0;
+  list-style: none;
+  background: none;
+  border: none;
+  color: #555 !important;
+  font-size: 13px;
+}
+
+.dropdown-menu:hover * {
+  color: #E00000;
+}
