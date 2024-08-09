@@ -82,19 +82,23 @@ function get_random_background_image() {
 }
 
 function add_custom_background_style() {
-    // Appeler la fonction pour obtenir l'image aléatoire
-    $background_image = get_random_background_image();
+    // Vérifier si nous sommes sur la page d'accueil
+    if (is_front_page() || is_home()) {
+        // Appeler la fonction pour obtenir l'image aléatoire
+        $background_image = get_random_background_image();
 
-    // Injecter le CSS pour le fond personnalisé
-    echo "
-    <style>
-        body {
-            background-image: url('$background_image');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    </style>
-    ";
+        // Injecter le CSS pour le fond personnalisé
+        echo "
+        <style>
+            body {
+                background-image: url('$background_image');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        </style>
+        ";
+    }
 }
 add_action('wp_head', 'add_custom_background_style');
+

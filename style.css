@@ -163,23 +163,16 @@ Updated: 2024-07-23 02:47:09
   list-style: none;
   background: none;
   border: none;
-  color: #555 !important;
+
   font-size: 13px;
 }
 
-.dropdown-menu:hover * {
-  color: #E00000;
-}
-
-.ma-classe-personnalisee {
-  padding-left: 20px;
-}
-
-.ma-classe-personnalisee:hover
+.dropdown-menu:hover * 
+.dropdown-menu:active *
+.dropdown-menu:focus *
+.footer-menu li:active
+.footer-menu li:focus
 {
- color: #E00000 !important;
+  color: #E00000 !important;
 }
 
-.text-wrap:hover{
-color: #E00000 !important;
-}
