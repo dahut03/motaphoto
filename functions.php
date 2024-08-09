@@ -52,3 +52,49 @@ function my_theme_enqueue_scripts() {
     wp_enqueue_script( 'custom-scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), null, true );
 }
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_scripts' );
+
+
+function get_random_background_image() {
+    // Array des URLs des images
+    $background_images = array(
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-1.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-2.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-3.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-4.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-5.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-6.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-7.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-8.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-9.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-10.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-11.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-12.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-13.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-14.jpeg',
+        get_template_directory_uri() . '/../oceanwp-child/images/photos/nathalie-15.jpeg',
+        // Ajoutez ici plus d'images si nécessaire
+    );
+
+    // Sélectionner une image aléatoirement
+    $random_image = $background_images[array_rand($background_images)];
+
+    return $random_image;
+}
+
+function add_custom_background_style() {
+    // Appeler la fonction pour obtenir l'image aléatoire
+    $background_image = get_random_background_image();
+
+    // Injecter le CSS pour le fond personnalisé
+    echo "
+    <style>
+        body {
+            background-image: url('$background_image');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+    ";
+}
+add_action('wp_head', 'add_custom_background_style');

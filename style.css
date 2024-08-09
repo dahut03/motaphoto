@@ -157,7 +157,9 @@ Updated: 2024-07-23 02:47:09
 }
 
 .dropdown-menu * {
-  padding: 0;
+  line-height: 74px;
+  padding-left: 10px;
+  letter-spacing: .6px;
   list-style: none;
   background: none;
   border: none;
@@ -167,4 +169,17 @@ Updated: 2024-07-23 02:47:09
 
 .dropdown-menu:hover * {
   color: #E00000;
+}
+
+.ma-classe-personnalisee {
+  padding-left: 20px;
+}
+
+.ma-classe-personnalisee:hover
+{
+ color: #E00000 !important;
+}
+
+.text-wrap:hover{
+color: #E00000 !important;
 }

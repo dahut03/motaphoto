@@ -86,3 +86,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 50);
     });
 });
+
+
+
+        $(document).ready(function() {
+            $.ajax({
+                url: 'get_images.php', // Le fichier PHP qui retourne la liste des images
+                method: 'GET',
+                success: function(data) {
+                    // Convertir la réponse JSON en tableau
+                    var images = JSON.parse(data);
+
+                    // Sélectionner une image aléatoire
+                    var randomImage = images[Math.floor(Math.random() * images.length)];
+
+                    // Créer un élément img et l'ajouter au conteneur
+                    var imgElement = $('<img>').attr('src', randomImage);
+                    $('#image-container').append(imgElement);
+                },
+                error: function() {
+                    $('#image-container').text('Erreur lors du chargement des images.');
+                }
+            });
+        });
