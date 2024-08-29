@@ -80,6 +80,7 @@ if ( 'fullscreen' === oceanwp_mobile_menu_style() ) {
 
 <?php wp_footer(); ?>
 <?php include('templates_part/contact_modal.php'); ?>
+<?php include('templates_part/contact_modal5.php'); ?>
 
 
 
@@ -96,6 +97,29 @@ if ( 'fullscreen' === oceanwp_mobile_menu_style() ) {
     ?>
 
 </div>
+
+<div id="lightbox-modal" class="lightbox-modal">
+<span class="close">&times;</span>
+
+  <div class="lightbox-content-wrapper">
+    <span class="prev" onclick="changeImage(-1)">&#x2190; Précédent</span>
+    <img class="lightbox-content" id="lightbox-image" alt="">
+    <span class="next" onclick="changeImage(1)">Suivant &#x2192;</span>
+  </div>
+  <div id="caption">
+
+</div>
+
+
+
+  
+</div>
+
+
+
+
+
+
 
 
 </body>
