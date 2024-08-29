@@ -1,16 +1,73 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Récupération des éléments
-    var modal = document.getElementById('contactModal');
-    var openBtn = document.getElementById('contactButton');
-    var closeBtn = modal.querySelector('.close');
+    // --- Variables communes ---
+    const modal = document.getElementById('lightbox-modal');
+    const modal5 = document.getElementById('modal-5');
+    const contactModal = document.getElementById('contactModal');
+    
+    const closeBtns = document.querySelectorAll('.close, .close-modal');
+    const openBtns = document.querySelectorAll('#contactButton1, #contactButton2, .contact-button-menu2, #open-modal-5');
 
-    // Fonction pour le fade-in
+    // --- Variables spécifiques à la Lightbox ---
+    let currentIndex = 0;
+    const images = [
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-0.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-1.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-2.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-3.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-4.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-5.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-6.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-7.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-8.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-9.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-10.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-11.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-12.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-13.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-14.jpeg',
+        'http://localhost/motaphoto.com2/wp-content/themes/oceanwp-child/images/photos/nathalie-15.jpeg',
+        // Ajoutez les autres chemins d'images ici
+    ];
+    const modalImg = document.getElementById("lightbox-image");
+    const captionText = document.getElementById("caption");
+
+    // --- Fonctions communes ---
+    function closeLightbox() {
+        modal.style.display = "none";
+        contactModal.style.display = "none";
+        modal5.style.display = "none";
+    }
+
+    function openLightbox(index) {
+        currentIndex = index;
+        modal.style.display = "block";
+        modalImg.src = images[currentIndex];
+    
+        const imgElement = document.querySelector(`.elementor-image-carousel img[data-index="${index}"]`);
+        const reference = imgElement ? imgElement.getAttribute('data-reference') : 'Référence non disponible';
+        const categories = imgElement ? imgElement.getAttribute('data-categories') : 'Catégorie non disponible';
+    
+        captionText.innerHTML = `<span style="float: left;">Référence : ${reference}</span><span style="float: right;">Catégories : ${categories}</span>`;
+    }
+    
+    function changeImage(direction) {
+        currentIndex = (currentIndex + direction + images.length) % images.length;
+        modalImg.src = images[currentIndex];
+        
+        // Mettre à jour la légende en changeant d'image
+        const imgElement = document.querySelector(`.elementor-image-carousel img[data-index="${currentIndex}"]`);
+        const reference = imgElement ? imgElement.getAttribute('data-reference') : 'Référence non disponible';
+        const categories = imgElement ? imgElement.getAttribute('data-categories') : 'Catégorie non disponible';
+        
+        captionText.innerHTML = `<span style="float: left;">Référence : ${reference}</span><span style="float: right;">Catégories : ${categories}</span>`;
+    }
+
     function fadeIn(element, duration) {
         element.style.opacity = 0;
         element.style.display = "block";
 
-        var last = +new Date();
-        var tick = function() {
+        let last = +new Date();
+        let tick = function() {
             element.style.opacity = +element.style.opacity + (new Date() - last) / duration;
             last = +new Date();
 
@@ -21,12 +78,11 @@ document.addEventListener('DOMContentLoaded', function() {
         tick();
     }
 
-    // Fonction pour le fade-out
     function fadeOut(element, duration) {
         element.style.opacity = 1;
 
-        var last = +new Date();
-        var tick = function() {
+        let last = +new Date();
+        let tick = function() {
             element.style.opacity = +element.style.opacity - (new Date() - last) / duration;
             last = +new Date();
 
@@ -39,73 +95,67 @@ document.addEventListener('DOMContentLoaded', function() {
         tick();
     }
 
-    // Ouvrir la modale avec fade-in
-    openBtn.addEventListener('click', function() {
-        fadeIn(modal, 500); // 500ms pour le fade-in
+    function openModal(modal) {
+        fadeIn(modal, 500);
+    }
+
+    function closeModal(modal) {
+        fadeOut(modal, 500);
+    }
+
+    // --- Événements pour Lightbox ---
+    document.querySelectorAll('.elementor-image-carousel img').forEach((img, index) => {
+        img.addEventListener('click', function(event) {
+            event.preventDefault();
+            openLightbox(index);
+        });
     });
 
-    // Fermer la modale avec fade-out
-    closeBtn.addEventListener('click', function() {
-        fadeOut(modal, 500); // 500ms pour le fade-out
+    document.querySelector('.prev').addEventListener('click', function() {
+        changeImage(-1);
     });
 
-    // Fermer la modale en cliquant en dehors du contenu, avec fade-out
+    document.querySelector('.next').addEventListener('click', function() {
+        changeImage(1);
+    });
+
+    // --- Événements pour Modales ---
+    openBtns.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (btn.id === 'open-modal-5') {
+                openModal(modal5);
+            } else {
+                openModal(contactModal);
+            }
+        });
+    });
+
+    closeBtns.forEach(function(btn) {
+        btn.addEventListener('click', closeLightbox);
+    });
+
+    // Fermeture en cliquant en dehors de la modale
     window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            fadeOut(modal, 500); // 500ms pour le fade-out
+        if (event.target === modal || event.target === contactModal || event.target === modal5) {
+            closeLightbox();
         }
     });
 });
-document.addEventListener('DOMContentLoaded', function() {
-    var contactButton = document.getElementById('contactButton');
-    var contactPopup = document.getElementById('contactPopup');
-    var closeButton = document.getElementById('closePopupButton'); // Assurez-vous d'avoir un bouton de fermeture dans votre pop-up
-
-    // Afficher le pop-up avec effet fade-in
-    contactButton.addEventListener('click', function() {
-        contactPopup.style.display = 'block';
-        contactPopup.style.opacity = 0;
-        var fadeIn = setInterval(function() {
-            if (contactPopup.style.opacity < 1) {
-                contactPopup.style.opacity = parseFloat(contactPopup.style.opacity) + 0.1;
-            } else {
-                clearInterval(fadeIn);
-            }
-        }, 50);
-    });
-
-    // Masquer le pop-up avec effet fade-out
-    closeButton.addEventListener('click', function() {
-        var fadeOut = setInterval(function() {
-            if (contactPopup.style.opacity > 0) {
-                contactPopup.style.opacity = parseFloat(contactPopup.style.opacity) - 0.1;
-            } else {
-                clearInterval(fadeOut);
-                contactPopup.style.display = 'none';
-            }
-        }, 50);
-    });
-});
 
 
 
-        $(document).ready(function() {
-            $.ajax({
-                url: 'get_images.php', // Le fichier PHP qui retourne la liste des images
-                method: 'GET',
-                success: function(data) {
-                    // Convertir la réponse JSON en tableau
-                    var images = JSON.parse(data);
 
-                    // Sélectionner une image aléatoire
-                    var randomImage = images[Math.floor(Math.random() * images.length)];
 
-                    // Créer un élément img et l'ajouter au conteneur
-                    var imgElement = $('<img>').attr('src', randomImage);
-                    $('#image-container').append(imgElement);
-                },
-                error: function() {
-                    $('#image-container').text('Erreur lors du chargement des images.');
-                }
-            });
-        });
+
+
+function openFullscreen(element) {
+    var img = element.parentElement.querySelector('img');
+    if (img.requestFullscreen) {
+        img.requestFullscreen();
+    } else if (img.webkitRequestFullscreen) { /* Safari */
+        img.webkitRequestFullscreen();
+    } else if (img.msRequestFullscreen) { /* IE11 */
+        img.msRequestFullscreen();
+    }
+}
