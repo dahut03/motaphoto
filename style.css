@@ -249,11 +249,9 @@ margin-top: 55px;
 }
 .image-item {
   position: relative;
-  width: 100%;
-  height: 100%;
   background-size: cover;
   background-position: center;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 1s ease-in-out;
 }
 .image-item.visible {
@@ -420,8 +418,6 @@ margin-top: 55px;
 
 .image-item {
   position: relative;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
 }
 
@@ -543,11 +539,9 @@ margin-top: 55px;
   opacity: 1;
 }
 
-
-
-
-
-
+.elementor-swiper-button {
+  margin-top: 60px;
+}
 
 
 
@@ -593,7 +587,7 @@ margin-top: 55px;
   color: white;
   padding: 5px;
   border-radius: 50%;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s;
   cursor: pointer;
 }
@@ -608,9 +602,10 @@ margin-top: 55px;
   color: white;
   padding: 5px;
   border-radius: 50%;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s;
   cursor: pointer;
+  margin-top: -185px;
 }
 
 .image-container:hover .eye-icon2,
@@ -793,6 +788,305 @@ form input[type="email"]
 }
 
 
+.ajax-button-secondary {
+  background-color: #ff5722; /* Couleur différente pour le bouton secondaire */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.ajax-active {
+  border: 2px solid #0073aa; /* Indiquer visuellement que le bouton est en Ajax */
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+a:focus {
+  outline: solid 0px !important;
+}
+
+
+.related-image2 {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%; /* Pour un ratio 4:3 par exemple */
+  background-size: cover;
+  background-position: center;
+  transform: scale(0); /* Start with no size (scaled down) */
+    animation: zoomIn 0.7s forwards ease-in-out;
+    /* Optional delay before the animation starts */
+    animation-delay: 0.5s;
+}
+
+/* Keyframes for the zoom-in effect */
+@keyframes zoomIn {
+    to {
+        transform: scale(1); /* Scale to normal size */
+    }
+}
+
+
+.overlay-icons2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.related-image2:hover .overlay-icons2 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+}
+
+.fullscreen-icon2, .eye-icon2 {
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+}
+
+
+.image-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.fullscreen-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px; 
+  background-color: rgba(0, 0, 0, 0.7); 
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+  font-weight: bold;
+  visibility: hidden;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  visibility: hidden;
+  cursor: pointer;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+
+
+
+
+
+
+
+body .is-layout-flex {
+	width: 1148px;
+	margin: 0 auto;
+}
+
+.wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+	width: 100%
+}
+
+
+.image2_suggestions{
+  margin-top: 44px;
+  transform: scale(0); /* Start with no size (scaled down) */
+    animation: zoomIn 3s forwards ease-in-out;
+    /* Optional delay before the animation starts */
+    animation-delay: 2s;
+}
+
+/* Keyframes for the zoom-in effect */
+@keyframes zoomIn {
+    to {
+        transform: scale(1); /* Scale to normal size */
+    }
+}
+
+
+
+.interet{
+  font-family: "Poppins", Sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 21px;
+}
+
+.bouton_contact{
+  padding-right: 470px;
+}
+
+.titre_photos {
+	color: #000000;
+	font-family: Space Mono;
+	font-size: 66px;
+	font-style: italic;
+	font-weight: 400;
+	line-height: 58px;
+	text-align: left;
+  padding-bottom: 30px;
+}
+
+.metaslider .flexslider .flex-direction-nav li a
+{
+  margin-top: 42px !important;
+}
+
+.vous_aimerez{
+  color: #000000;
+  font-family: "Space Mono", Sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 26.66px;
+}
+
+
+
+p {
+  margin: 0 0 15px;
+}
+
+.image_principale{
+  width: 572px;
+  height: auto;
+  margin-left: 64px !important;
+}
+
+.metaslider-flex.ms-theme-default .flex-prev:focus 
+.metaslider-flex.ms-theme-default .flex-next:focus {
+	background: url('bg_direction_nav.png') scroll left 0 transparent !important;
+	height: 8px !important;
+	background-repeat: no-repeat !important;
+}
+
+
+.wp-block-separator{
+  color:#000000;
+  border-bottom: 1px solid !important;
+}
+
+.ligne_longueur{
+  width: 117% !important;
+  margin-bottom: 20px !important;
+}
+
+.bloc_venant_de_gauche{
+  transform: scale(0) rotate(0deg) translateX(-200%);
+  opacity: 0;
+  animation: superAnimation 3s ease-in-out forwards;
+}
+
+/* Keyframes for the super animation */
+@keyframes superAnimation {
+  0% {
+      transform: scale(0)  translateX(-200%);
+      opacity: 1;
+  }
+  50% {
+      transform: scale(0.5)  translateX(50%);
+      opacity: 1;
+  }
+  100% {
+      transform: scale(1)  translateX(0);
+      opacity: 1;
+  }
+}
+
+
+#lightbox {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+
+.container-centered {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.info-column div {
+  margin-bottom: 10px; /* Espace entre les lignes */
+}
+
+.slider-container .metaslider {
+  width: 100% !important; /* Assure que le slider prend toute la largeur de son conteneur */
+  height: 100% !important; /* Assure que le slider prend toute la hauteur de son conteneur */
+}
+
+
+.image_vous_aimerez{
+  margin-right: 10px;
+}
+
+.image_vous_aimerez2{
+  margin-left: 10px;
+}
+
+
+.thumbnail-box {
+  position: relative;
+  width: 81px;  /* Largeur de la box */
+  height: 71px; /* Hauteur de la box */
+  overflow: hidden; /* Pour masquer les débordements */
+  border: 1px solid #ccc; /* Bordure pour la box */
+  margin-bottom: 10px; /* Espacement entre l'image et les liens */
+}
+
+.thumbnail-box img {
+  width: 100%;  /* L'image remplira la box */
+  height: auto; /* Conserver le ratio */
+}
+
+/* Style pour les liens de navigation */
+.navigation {
+  display: flex; /* Utiliser flexbox pour aligner les liens */
+  justify-content: space-between; /* Espacement entre les liens */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  font-size: x-large;
+  margin-top: -19px;
+}
+
+
+
+
+
+
+
 
 
 
@@ -802,17 +1096,18 @@ form input[type="email"]
   }
   .image-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); /* Adapte automatiquement */
+    grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); /* Adapte automatiquement */
     gap: 10px;
   }
   
   .image-item {
     position: relative;
-    width: 100%;
+    width: 95%;
     background-size: cover;
     background-position: center;
     opacity: 0; /* Remettre l'opacité à 0 si l'effet fonctionne */
     transition: opacity 1s ease-in-out;
+    margin: auto;
   }
   
   .image-item.visible {
@@ -926,5 +1221,100 @@ a:focus{
 .elementor-337 .elementor-element.elementor-element-54bdaf8 {
 	bottom: 25px;
 }
+
+.elementor-337 .elementor-element.elementor-element-53398ac {
+  text-align: center;
+}
+
+.ligne_longueur {
+  width: 100% !important;
+}
+
+.image_vous_aimerez{
+  margin-right: 0px;
+}
+
+.image_vous_aimerez2{
+  margin-left: 0px;
+}
+
+#metaslider_986 {
+  display: none;
+}
+
+.vous_aimerez {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+.image_principale {
+  width: auto;
+  height: auto;
+  margin-left: 0px !important;
+}
+
+.footer-menu-container {
+  width: 100%;
+}
+
+.container-centered {
+  padding: 10px 10px;
+}
+
+.bouton_contact {
+  text-align: center;
+  padding-right: 0px !important;
+}
+
+.interet {
+  margin-left: 117px;
+}
+
+/* Conteneur des filtres de gauche */
+.filter-group-categorie,
+.filter-group-format {
+    display: block;
+}
+
+#lightbox-prev,
+#lightbox-next{
+  top: 80% !important;
+  font-size: 20px !important;
+}
+
+#lightbox-image-info{
+  width: 400px;
+}
+/* Appliquer uniquement à la section avec la classe custom-mobile-reverse */
+.custom-mobile-reverse {
+    display: flex;
+    flex-direction: row; /* Par défaut, les colonnes sont affichées l'une à côté de l'autre */
+}
+
+@media (max-width: 768px) {
+    .custom-mobile-reverse {
+        flex-direction: column-reverse; /* Inverser les colonnes uniquement sur mobile */
+    }
+}
+
+
+.oceanwp-mobile-menu-icon a.mobile-menu.opened .oceanwp-close-text {
+  display: none !important;
+}
+
+/* Icône de menu burger par défaut */
+.oceanwp-mobile-menu-icon i.fa-bars::before, 
+.oceanwp-mobile-menu-icon i.fa-navicon::before {
+    content: "\f0c9"; /* Icône des trois barres */
+}
+
+/* Icône de croix quand le menu est ouvert */
+.menu-opened .oceanwp-mobile-menu-icon i.fa-bars::before, 
+.menu-opened .oceanwp-mobile-menu-icon i.fa-navicon::before {
+    content: "\f00d"; /* Icône de croix */
+}
+
+
 
 }

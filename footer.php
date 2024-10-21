@@ -80,7 +80,11 @@ if ( 'fullscreen' === oceanwp_mobile_menu_style() ) {
 
 <?php wp_footer(); ?>
 <?php include('templates_part/contact_modal.php'); ?>
-<?php include('templates_part/contact_modal5.php'); ?>
+<?php
+if (is_singular('photo')) {
+    include('templates_part/contact_modal5.php');
+}
+?>
 
 
 
