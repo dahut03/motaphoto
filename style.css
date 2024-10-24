@@ -65,6 +65,11 @@ Updated: 2024-07-23 02:47:09
     color: inherit; /* Utiliser la couleur du texte par défaut */
 }
 
+.footer-menu a:hover{
+	color: #E00000;
+}
+
+
 .menu-item.active {
     color: #E00000;
   }
@@ -291,8 +296,13 @@ margin-top: 55px;
   padding: 10px 20px;
   margin: 5px;
   cursor: pointer;
+  width: 272px;
+  border-radius: 2px;
 }
 
+.pagination button:hover {
+  background-color: #858585;
+}
 
 @media screen and (min-width: 30em) {
   .gallery-item {
@@ -789,10 +799,11 @@ form input[type="email"]
 
 
 .ajax-button-secondary {
-  background-color: #ff5722; /* Couleur différente pour le bouton secondaire */
-  color: #fff;
+  background-color: #D8D8D8; /* Couleur différente pour le bouton */
+  color: #000000;
   border: none;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .ajax-active {
@@ -1058,7 +1069,6 @@ p {
   width: 81px;  /* Largeur de la box */
   height: 71px; /* Hauteur de la box */
   overflow: hidden; /* Pour masquer les débordements */
-  border: 1px solid #ccc; /* Bordure pour la box */
   margin-bottom: 10px; /* Espacement entre l'image et les liens */
 }
 
@@ -1315,6 +1325,8 @@ a:focus{
     content: "\f00d"; /* Icône de croix */
 }
 
-
+#site-header {
+  box-shadow: 0px 4px 4px 0px #00000017;
+}
 
 }

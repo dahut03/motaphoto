@@ -290,22 +290,22 @@ function add_random_image_script() {
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var images = [
-                    'nathalie-0.jpeg',
-                    'nathalie-1.jpeg',
-                    'nathalie-2.jpeg',
-                    'nathalie-3.jpeg',
-                    'nathalie-4.jpeg',
-                    'nathalie-5.jpeg',
-                    'nathalie-6.jpeg',
-                    'nathalie-7.jpeg',
-                    'nathalie-8.jpeg',
-                    'nathalie-9.jpeg',
-                    'nathalie-10.jpeg',
-                    'nathalie-11.jpeg',
-                    'nathalie-12.jpeg',
-                    'nathalie-13.jpeg',
-                    'nathalie-14.jpeg',
-                    'nathalie-15.jpeg'
+                    'nathalie-0.webp',
+                    'nathalie-1.webp',
+                    'nathalie-2.webp',
+                    'nathalie-3.webp',
+                    'nathalie-4.webp',
+                    'nathalie-5.webp',
+                    'nathalie-6.webp',
+                    'nathalie-7.webp',
+                    'nathalie-8.webp',
+                    'nathalie-9.webp',
+                    'nathalie-10.webp',
+                    'nathalie-11.webp',
+                    'nathalie-12.webp',
+                    'nathalie-13.webp',
+                    'nathalie-14.webp',
+                    'nathalie-15.webp'
                 ];
 
                 var randomImage = images[Math.floor(Math.random() * images.length)];

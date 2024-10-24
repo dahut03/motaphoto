@@ -101,7 +101,7 @@ get_header(); // Inclut le header du thème
 
 <!-- Pagination -->
 <div class="pagination">
-    <button id="second-next-button" class="ajax-button-secondary">Charger plus (secondaire)</button>
+    <button id="second-next-button" class="ajax-button-secondary">Charger plus</button>
 </div>
 
 <script>
