@@ -1092,7 +1092,13 @@ p {
 }
 
 
-
+#no-more-images {
+  color: #E00000;
+  text-align: center;
+  margin-top: -74px !important;
+  position: relative;
+  z-index: 10000;
+}
 
 
 
@@ -1328,5 +1334,10 @@ a:focus{
 #site-header {
   box-shadow: 0px 4px 4px 0px #00000017;
 }
+
+#no-more-images {
+  margin-top: -186px !important;
+}
+
 
 }

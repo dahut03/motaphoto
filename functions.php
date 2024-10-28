@@ -564,3 +564,56 @@ function load_more_images_ajax() {
 
 
 
+add_action('wp_ajax_load_more_images', 'load_more_images');
+add_action('wp_ajax_nopriv_load_more_images', 'load_more_images');
+
+function load_more_images() {
+    if (!session_id()) {
+        session_start();
+    }
+
+    // Réinitialisation des images chargées si demandé
+    if (isset($_POST['reset']) && $_POST['reset'] === 'true') {
+        unset($_SESSION['loaded_images']);
+        $_SESSION['loaded_images'] = [];
+    }
+
+    // Récupérer la page et les images chargées
+    $current_page = intval($_POST['currentPage']);
+    $loaded_images = isset($_POST['loadedImages']) ? json_decode(stripslashes($_POST['loadedImages']), true) : [];
+
+    // Logique pour récupérer les images
+    $args = array(
+        'post_type' => 'photo', // Assurez-vous que ce type de publication est correct
+        'posts_per_page' => 8,
+        'paged' => $current_page,
+        'post__not_in' => $loaded_images, // Exclure les images déjà chargées
+    );
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        $images = [];
+        while ($query->have_posts()) {
+            $query->the_post();
+            $images[] = array(
+                'id' => get_the_ID(),
+                'title' => get_the_title(),
+                'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'medium'),
+                // Ajoutez d'autres champs d'image si nécessaire
+            );
+        }
+        wp_reset_postdata();
+
+        // Sauvegarder l'état des images chargées
+        $_SESSION['loaded_images'] = array_merge($_SESSION['loaded_images'], array_column($images, 'id'));
+        wp_send_json_success(['images' => $images]);
+    } else {
+        wp_send_json_error('Pas d\'images à charger.'); // Aucune image trouvée
+    }
+}
+
+
+
+
+

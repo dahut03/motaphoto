@@ -130,7 +130,7 @@ function appendImages(images) {
     });
 }
 
-let images = <?php echo json_encode($images); ?>;
+const images = <?php echo json_encode($images); ?>; // Utilisation de const ici
 let currentPage = 1;
 const itemsPerPage = 8;
 
@@ -310,6 +310,17 @@ function showImageInLightbox(index, filteredImages) {
 }
 
 function closeLightbox() {
+    let overlay = document.getElementById('lightbox-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+function loadMoreImagesAjax() {
+    currentPage++;
+    loadImages();
+}
+function closeLightbox() {
     const elementsToRemove = ['lightbox-overlay', 'lightbox-image', 'lightbox-prev', 'lightbox-next', 'lightbox-close'];
 
     // Ajoutez l'ID du conteneur d'infos à la liste des éléments à supprimer
@@ -322,11 +333,8 @@ function closeLightbox() {
         }
     });
 }
-
-loadImages();
+loadImages(); // Charger les images initialement
 </script>
 
-
-
-
-<?php get_footer(); // Inclut le footer du thème ?>
+<?php
+get_footer(); // Inclut le footer du thème
