@@ -286,34 +286,26 @@ add_action('wp_footer', 'custom_hover_icon_script');
 // Dans functions.php de votre thème enfant
 function add_random_image_script() {
     if (is_front_page()) { // Vérifie si c'est la page d'accueil
+        // Récupère toutes les images dans le répertoire 'images/photos/'
+        $directory = get_stylesheet_directory() . '/images/photos/';
+        $image_files = glob($directory . '*.{jpg,jpeg,png,webp}', GLOB_BRACE);
+
+        // Génère la liste d'URL d'images à partir des noms de fichiers trouvés
+        $image_urls = array_map(function($file) {
+            return get_stylesheet_directory_uri() . '/images/photos/' . basename($file);
+        }, $image_files);
+
         ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var images = [
-                    'nathalie-0.webp',
-                    'nathalie-1.webp',
-                    'nathalie-2.webp',
-                    'nathalie-3.webp',
-                    'nathalie-4.webp',
-                    'nathalie-5.webp',
-                    'nathalie-6.webp',
-                    'nathalie-7.webp',
-                    'nathalie-8.webp',
-                    'nathalie-9.webp',
-                    'nathalie-10.webp',
-                    'nathalie-11.webp',
-                    'nathalie-12.webp',
-                    'nathalie-13.webp',
-                    'nathalie-14.webp',
-                    'nathalie-15.webp'
-                ];
+                var images = <?php echo json_encode($image_urls); ?>;
 
                 var randomImage = images[Math.floor(Math.random() * images.length)];
                 var container = document.createElement('div');
                 container.className = 'image-random-container';
-                
+
                 var img = document.createElement('img');
-                img.src = '<?php echo get_stylesheet_directory_uri(); ?>/images/photos/' + randomImage;
+                img.src = randomImage;
                 container.appendChild(img);
 
                 var text = document.createElement('div');
@@ -334,6 +326,7 @@ function add_random_image_script() {
     }
 }
 add_action('wp_footer', 'add_random_image_script');
+
 
 
 function custom_mobile_script() {

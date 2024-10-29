@@ -291,3 +291,26 @@ if (resetButton) {
 
 
 
+function filterImagesList(images) {
+    let category = document.getElementById('category-filter').value;
+    let format = document.getElementById('format-filter').value;
+    let date = document.getElementById('date-filter').value;
+
+    // Filtrage des images par catégorie et format
+    let filteredImages = images.filter(image => {
+        return (category === 'all' || image.category === category) &&
+               (format === 'all' || image.format === format);
+    });
+
+    // Affichage des dates pour vérifier leur format
+    filteredImages.forEach(image => console.log('Date avant conversion:', image.date, 'Date après conversion:', new Date(image.date)));
+
+    // Tri des images par date si une option de tri est sélectionnée
+    if (date === 'newest') {
+        filteredImages.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (date === 'oldest') {
+        filteredImages.sort((a, b) => new Date(a.date) - new Date(b.date));
+    }
+
+    return filteredImages;
+}
