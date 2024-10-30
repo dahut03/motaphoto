@@ -296,13 +296,8 @@ margin-top: 55px;
   padding: 10px 20px;
   margin: 5px;
   cursor: pointer;
-  width: 272px;
-  border-radius: 2px;
 }
 
-.pagination button:hover {
-  background-color: #858585;
-}
 
 @media screen and (min-width: 30em) {
   .gallery-item {
@@ -804,8 +799,12 @@ form input[type="email"]
   border: none;
   cursor: pointer;
   border-radius: 2px;
+  width: 270px;
 }
 
+.ajax-button-secondary:hover {
+  background-color: #838383;
+}
 .ajax-active {
   border: 2px solid #0073aa; /* Indiquer visuellement que le bouton est en Ajax */
 }
@@ -1092,13 +1091,7 @@ p {
 }
 
 
-#no-more-images {
-  color: #E00000;
-  text-align: center;
-  margin-top: -74px !important;
-  position: relative;
-  z-index: 10000;
-}
+
 
 
 
@@ -1334,10 +1327,5 @@ a:focus{
 #site-header {
   box-shadow: 0px 4px 4px 0px #00000017;
 }
-
-#no-more-images {
-  margin-top: -186px !important;
-}
-
 
 }

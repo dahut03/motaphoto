@@ -286,26 +286,34 @@ add_action('wp_footer', 'custom_hover_icon_script');
 // Dans functions.php de votre thème enfant
 function add_random_image_script() {
     if (is_front_page()) { // Vérifie si c'est la page d'accueil
-        // Récupère toutes les images dans le répertoire 'images/photos/'
-        $directory = get_stylesheet_directory() . '/images/photos/';
-        $image_files = glob($directory . '*.{jpg,jpeg,png,webp}', GLOB_BRACE);
-
-        // Génère la liste d'URL d'images à partir des noms de fichiers trouvés
-        $image_urls = array_map(function($file) {
-            return get_stylesheet_directory_uri() . '/images/photos/' . basename($file);
-        }, $image_files);
-
         ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var images = <?php echo json_encode($image_urls); ?>;
+                var images = [
+                    'nathalie-0.jpeg',
+                    'nathalie-1.jpeg',
+                    'nathalie-2.jpeg',
+                    'nathalie-3.jpeg',
+                    'nathalie-4.jpeg',
+                    'nathalie-5.jpeg',
+                    'nathalie-6.jpeg',
+                    'nathalie-7.jpeg',
+                    'nathalie-8.jpeg',
+                    'nathalie-9.jpeg',
+                    'nathalie-10.jpeg',
+                    'nathalie-11.jpeg',
+                    'nathalie-12.jpeg',
+                    'nathalie-13.jpeg',
+                    'nathalie-14.jpeg',
+                    'nathalie-15.jpeg'
+                ];
 
                 var randomImage = images[Math.floor(Math.random() * images.length)];
                 var container = document.createElement('div');
                 container.className = 'image-random-container';
-
+                
                 var img = document.createElement('img');
-                img.src = randomImage;
+                img.src = '<?php echo get_stylesheet_directory_uri(); ?>/images/photos/' + randomImage;
                 container.appendChild(img);
 
                 var text = document.createElement('div');
@@ -326,7 +334,6 @@ function add_random_image_script() {
     }
 }
 add_action('wp_footer', 'add_random_image_script');
-
 
 
 function custom_mobile_script() {
@@ -553,60 +560,126 @@ function load_more_images_ajax() {
     wp_die(); // Terminer l'exécution de la requête AJAX
 }
 
+// Ajoutez cette fonction dans functions.php
+function get_featured_images() {
+    // Vérifiez le nonce pour la sécurité (ajoutez un nonce côté JS également)
+    check_ajax_referer('load_featured_images_nonce', 'nonce');
+
+    // Requête pour récupérer les articles CPT (remplacez 'photo' par le slug de votre CPT)
+    $args = [
+        'post_type'      => 'photo',  // Nom de votre CPT
+        'posts_per_page' => -1        // Nombre d'articles à récupérer
+    ];
+
+    $query = new WP_Query($args);
+    $images = [];
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            if (has_post_thumbnail()) {
+                // Récupérez l'URL de l'image mise en avant
+                $images[] = get_the_post_thumbnail_url(get_the_ID(), 'full');
+            }
+        }
+        wp_reset_postdata();
+    }
+
+    // Renvoyez la liste des URLs d'images en JSON
+    wp_send_json($images);
+}
+add_action('wp_ajax_get_featured_images', 'get_featured_images');
+add_action('wp_ajax_nopriv_get_featured_images', 'get_featured_images');
 
 
+// Dans ton fichier functions.php
+function mon_script_ajax() {
+    // Enqueue ton script principal
+    wp_enqueue_script('mon_script', get_template_directory_uri() . '/../oceanwp-child/js/mon_script.js', array('jquery'), '1.0', true);
 
+    // Crée le nonce et l'URL AJAX, puis les passe à ton script JavaScript
+    wp_localize_script('mon_script', 'ajax_object', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('mon_nonce_action')
+    ));
+}
+add_action('wp_enqueue_scripts', 'mon_script_ajax');
+
+
+function mon_action_ajax() {
+    // Vérifie le nonce pour sécuriser la requête
+    check_ajax_referer('mon_nonce_action', 'security');
+
+    // Code à exécuter si le nonce est valide
+    $resultat = array('message' => 'Requête sécurisée réussie !');
+    wp_send_json_success($resultat);
+}
+add_action('wp_ajax_mon_action', 'mon_action_ajax');
+add_action('wp_ajax_nopriv_mon_action', 'mon_action_ajax');  // Si tu veux que la requête soit accessible aux non-connectés
 
 add_action('wp_ajax_load_more_images', 'load_more_images');
 add_action('wp_ajax_nopriv_load_more_images', 'load_more_images');
 
 function load_more_images() {
-    if (!session_id()) {
-        session_start();
-    }
+    check_ajax_referer('YOUR_NONCE_VALUE', 'nonce');
 
-    // Réinitialisation des images chargées si demandé
-    if (isset($_POST['reset']) && $_POST['reset'] === 'true') {
-        unset($_SESSION['loaded_images']);
-        $_SESSION['loaded_images'] = [];
-    }
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
+    $images = [];
 
-    // Récupérer la page et les images chargées
-    $current_page = intval($_POST['currentPage']);
-    $loaded_images = isset($_POST['loadedImages']) ? json_decode(stripslashes($_POST['loadedImages']), true) : [];
-
-    // Logique pour récupérer les images
-    $args = array(
-        'post_type' => 'photo', // Assurez-vous que ce type de publication est correct
+    $query_args = [
+        'post_type' => 'photo',
         'posts_per_page' => 8,
-        'paged' => $current_page,
-        'post__not_in' => $loaded_images, // Exclure les images déjà chargées
-    );
-
-    $query = new WP_Query($args);
+        'offset' => $offset
+    ];
+    $query = new WP_Query($query_args);
 
     if ($query->have_posts()) {
-        $images = [];
         while ($query->have_posts()) {
             $query->the_post();
-            $images[] = array(
-                'id' => get_the_ID(),
-                'title' => get_the_title(),
-                'thumbnail' => get_the_post_thumbnail_url(get_the_ID(), 'medium'),
-                // Ajoutez d'autres champs d'image si nécessaire
-            );
+            $image_url = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+            if ($image_url) {
+                $images[] = $image_url;
+            }
         }
         wp_reset_postdata();
+    }
 
-        // Sauvegarder l'état des images chargées
-        $_SESSION['loaded_images'] = array_merge($_SESSION['loaded_images'], array_column($images, 'id'));
+    if (!empty($images)) {
         wp_send_json_success(['images' => $images]);
     } else {
-        wp_send_json_error('Pas d\'images à charger.'); // Aucune image trouvée
+        wp_send_json_error(['message' => 'Aucune image disponible']);
     }
+
+    wp_die();
 }
 
+function my_enqueue_scripts() {
+    wp_enqueue_script('my-ajax-script', get_theme_file_uri('/../oceanwp-child/js/scripts.js'), ['jquery'], null, true);
+    wp_localize_script('my-ajax-script', 'ajax_params', [
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('YOUR_NONCE_VALUE')
+    ]);
+}
+add_action('wp_enqueue_scripts', 'my_enqueue_scripts');
 
 
+function charger_plus_images() {
+    check_ajax_referer('votre_nonce', 'security');
+    
+    $images = obtenir_images(); // Votre fonction pour obtenir les images
+    $html = '';
+    
+    if (!empty($images)) {
+        foreach ($images as $image) {
+            $html .= '<div class="image-container">' . $image . '</div>';
+        }
+    } else {
+        wp_send_json_error(['message' => 'Il n\'y a plus d\'images à charger.']);
+    }
+
+    wp_send_json_success(['html' => $html]);
+}
+add_action('wp_ajax_charger_plus_images', 'charger_plus_images');
+add_action('wp_ajax_nopriv_charger_plus_images', 'charger_plus_images');
 
 

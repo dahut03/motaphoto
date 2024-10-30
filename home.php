@@ -101,8 +101,10 @@ get_header(); // Inclut le header du thème
 
 <!-- Pagination -->
 <div class="pagination">
-    <button id="second-next-button" class="ajax-button-secondary">Charger plus</button>
-</div>
+<button id="second-next-button" class="ajax-button-secondary">Charger plus</button>
+<div id="no-more-images" style="display:none; text-align:center; margin-top:20px;">Il n'y a plus d'images à charger</div>
+
+
 
 <script>
 document.getElementById('second-next-button').addEventListener('click', function() {
