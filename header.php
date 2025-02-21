@@ -33,6 +33,18 @@
 
 			<?php do_action( 'ocean_header' ); ?>
 			<?php include('templates_part/contact_modal.php'); ?>
+			<div id="contact-popup-overlay" style="display: none;">
+    <button id="close-popup-overlay" aria-label="Fermer la modale">&times;</button>
+    <div id="contact-popup">
+        <div class="contact-header-image-container">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/Contact_header.png" alt="Image en-tête du formulaire de contact">
+        </div>
+        <?php echo do_shortcode('[contact-form-7 id="a724969" title="Formulaire de contact 1_copy"]'); ?>
+    </div>
+</div>
+
+
+
 			<?php do_action( 'ocean_before_main' ); ?>
 
 			<main id="main" class="site-main clr"<?php oceanwp_schema_markup( 'main' ); ?> role="main">

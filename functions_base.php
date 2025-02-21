@@ -283,47 +283,56 @@ add_action('wp_footer', 'custom_hover_icon_script');
 // Dans functions.php de votre thème enfant
 function add_random_image_script() {
     if (is_front_page()) { // Vérifie si c'est la page d'accueil
+        // Récupération des images de mise en avant des articles de type 'photo'
+        $args = array(
+            'post_type' => 'photo',  // Remplacez par le type de publication personnalisé utilisé
+            'posts_per_page' => -1, // Récupère toutes les publications
+            'post_status' => 'publish',
+            'fields' => 'ids' // Récupère uniquement les IDs
+        );
+
+        $photos = get_posts($args);
+        $image_urls = array();
+
+        foreach ($photos as $photo_id) {
+            // Récupère l'URL de l'image de mise en avant
+            $image_url = get_the_post_thumbnail_url($photo_id, 'full');
+            if ($image_url) {
+                $image_urls[] = $image_url;
+            }
+        }
+
+        // Encode les URLs en JSON pour les envoyer au JavaScript
+        $image_urls_json = json_encode($image_urls);
         ?>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                var images = [
-                    'nathalie-0.jpeg',
-                    'nathalie-1.jpeg',
-                    'nathalie-2.jpeg',
-                    'nathalie-3.jpeg',
-                    'nathalie-4.jpeg',
-                    'nathalie-5.jpeg',
-                    'nathalie-6.jpeg',
-                    'nathalie-7.jpeg',
-                    'nathalie-8.jpeg',
-                    'nathalie-9.jpeg',
-                    'nathalie-10.jpeg',
-                    'nathalie-11.jpeg',
-                    'nathalie-12.jpeg',
-                    'nathalie-13.jpeg',
-                    'nathalie-14.jpeg',
-                    'nathalie-15.jpeg'
-                ];
-
-                var randomImage = images[Math.floor(Math.random() * images.length)];
-                var container = document.createElement('div');
-                container.className = 'image-random-container';
+                var images = <?php echo $image_urls_json; ?>;
                 
-                var img = document.createElement('img');
-                img.src = '<?php echo get_stylesheet_directory_uri(); ?>/images/photos/' + randomImage;
-                container.appendChild(img);
+                // Vérifier s'il y a des images dans la liste
+                if (images.length > 0) {
+                    var randomImage = images[Math.floor(Math.random() * images.length)];
+                    var container = document.createElement('div');
+                    container.className = 'image-random-container';
 
-                var text = document.createElement('div');
-                text.className = 'overlay-text';
-                text.innerText = 'Photographe Event';
-                container.appendChild(text);
+                    var img = document.createElement('img');
+                    img.src = randomImage;
+                    container.appendChild(img);
 
-                // Cibler le header pour insérer le conteneur juste après
-                var header = document.querySelector('header'); // Utiliser 'header' pour cibler l'élément header
-                if (header) {
-                    header.insertAdjacentElement('afterend', container); // Insère le conteneur juste après le header
+                    var text = document.createElement('div');
+                    text.className = 'overlay-text';
+                    text.innerText = 'Photographe Event';
+                    container.appendChild(text);
+
+                    // Cibler le header pour insérer le conteneur juste après
+                    var header = document.querySelector('header');
+                    if (header) {
+                        header.insertAdjacentElement('afterend', container); // Insère le conteneur juste après le header
+                    } else {
+                        document.body.insertBefore(container, document.body.firstChild); // Fallback si le header n'est pas trouvé
+                    }
                 } else {
-                    document.body.insertBefore(container, document.body.firstChild); // Fallback au cas où le header n'est pas trouvé
+                    console.warn("Aucune image trouvée pour les articles 'photo'.");
                 }
             });
         </script>
@@ -331,6 +340,7 @@ function add_random_image_script() {
     }
 }
 add_action('wp_footer', 'add_random_image_script');
+
 
 
 function custom_mobile_script() {
@@ -826,28 +836,13 @@ function charger_plus_images() {
 
 add_action('wp_ajax_charger_plus_images', 'charger_plus_images');
 add_action('wp_ajax_nopriv_charger_plus_images', 'charger_plus_images');
+function enqueue_custom_js_script() {
+    // Requête pour obtenir le nombre total de publications du type 'photo'
+    $total_images = wp_count_posts('photo')->publish;
 
-
-
-
-
-
-
-
-add_filter('wp_nav_menu_items', function($items, $args) {
-    // Vérifiez si c'est le bon emplacement de menu
-    if ($args->theme_location === 'primary') { // Remplacez 'primary' par l'emplacement de votre menu
-        // Ajoutez le formulaire après les autres éléments du menu
-        $items .= '<li class="menu-item menu-item-form">' . do_shortcode('[contact-form-7 id="a724969" title="Formulaire de contact 1_copy"]') . '</li>';
-    }
-    return $items;
-}, 10, 2);
-add_action('wp_enqueue_scripts', function() {
-    // Charger les scripts de Contact Form 7 si ce n'est pas fait
-    if (function_exists('wpcf7_enqueue_scripts')) {
-        wpcf7_enqueue_scripts();
-    }
-    if (function_exists('wpcf7_enqueue_styles')) {
-        wpcf7_enqueue_styles();
-    }
-});
+    // Passe la valeur à JavaScript
+    wp_localize_script('custom-js', 'photoData', array(
+        'totalImages' => $total_images,
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_custom_js_script');

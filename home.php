@@ -86,7 +86,7 @@ get_header(); // Inclut le header du thème
         <div class="filter-group date-filter">
             <div>Date</div> <!-- Titre au-dessus -->
             <select id="date-filter" onchange="filterImages()">
-                <option value="all"></option>
+                <option value="newest"></option>
                 <option value="newest">Les plus récentes</option>
                 <option value="oldest">Les plus anciennes</option>
             </select>
@@ -101,8 +101,12 @@ get_header(); // Inclut le header du thème
 
 <!-- Pagination -->
 <div class="pagination">
-<button id="second-next-button" class="ajax-button-secondary">Charger plus</button>
-<div id="no-more-images" style="display:none; text-align:center; margin-top:20px;">Il n'y a plus d'images à charger</div>
+    <button id="second-next-button" class="ajax-button-secondary">Charger plus</button>
+    <div id="no-more-images" style="display:none; text-align:center; margin-top:10px;">
+        Il n'y a plus d'images à charger
+    </div>
+</div>
+
 
 
 
@@ -253,10 +257,10 @@ function showImageInLightbox(index, filteredImages) {
     imageInfoContainer.style.textAlign = 'center';
     imageInfoContainer.style.zIndex = '1001';
     imageInfoContainer.innerHTML = `
-        <div style="float: left; margin-right: 20px;">
+        <div class="mobil-ref" style="float: left; margin-right: 95px;">
             Référence: ${currentImage.reference}
         </div>
-        <div style="float: right;">
+        <div class="mobil-cat" style="float: right;">
             Catégorie: ${currentImage.category}
         </div>
     `;
