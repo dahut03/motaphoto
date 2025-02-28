@@ -151,7 +151,7 @@ Updated: 2024-07-23 02:47:09
   margin: 15% auto;
   padding: 20px;
   border: 5px solid #000000;
-  width: 80%;
+  width: 88%;
   max-width: 600px;
   position: relative;
   padding-top: 130px;
@@ -600,7 +600,7 @@ margin-top: 55px;
 
 
 .fullscreen-icon2 {
-  top: 10px;
+  top: 80px;
   right: 10px;
   position: absolute;
   font-size: 24px;
@@ -1233,7 +1233,7 @@ background-position: right center;
   }
 
   .image-random-container .overlay-text{
-    font-size: 4em;
+    font-size: 3em;
   }
 
 
@@ -1453,9 +1453,7 @@ body div.wpforms-container-full .wpforms-form input[type="submit"]:hover, body d
 #site-logo #site-logo-inner a img, #site-header.center-header #site-navigation-wrap .middle-site-logo a img {
   max-width: 268px !important;
 }
-.modal {
-  position: relative !important;
-}
+
 
 #lightbox-image {
   max-width: 100% !important;
