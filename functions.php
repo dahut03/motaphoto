@@ -851,27 +851,3 @@ add_action('wp_enqueue_scripts', function() {
         wpcf7_enqueue_styles();
     }
 });
-
-function init_select2_ajax() {
-    wp_enqueue_script('select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js', array('jquery'), null, true);
-    wp_enqueue_style('select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css');
-
-    // Initialisation Select2 standard + après AJAX
-    wp_add_inline_script('select2-js', "
-        jQuery(document).ready(function($) {
-            // Fonction d'initialisation
-            function activerSelect2() {
-                $('.select2').select2();
-            }
-
-            // 1. Charger Select2 au chargement initial
-            activerSelect2();
-
-            // 2. Ré-initialiser après chaque mise à jour AJAX
-            $(document).on('ajaxComplete', function() {
-                activerSelect2();
-            });
-        });
-    ");
-}
-add_action('wp_enqueue_scripts', 'init_select2_ajax');
