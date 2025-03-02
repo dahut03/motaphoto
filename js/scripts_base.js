@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     // --- Variables communes ---
     const modal = document.getElementById('lightbox-modal');
-    const modal5 = document.getElementById('modal-5');
     const contactModal = document.getElementById('contactModal');
-    const overlay = document.getElementById('contact-popup-overlay');
+    
     const closeBtns = document.querySelectorAll('.close, .close-modal');
     const openBtns = document.querySelectorAll('#contactButton1, #contactButton2, .contact-button-menu2, #open-modal-5');
 
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeLightbox() {
         modal.style.display = "none";
         contactModal.style.display = "none";
-        modal5.style.display = "none";
     }
 
     function openLightbox(index) {
@@ -130,11 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fermeture en cliquant en dehors de la modale
     window.addEventListener('click', function(event) {
-        if (event.target === modal || event.target === contactModal || event.target === modal5) {
+        if (event.target === modal || event.target === contactModal) {
             closeLightbox();
         }
     });
-});
+    });
+
 
 // Reste du code inchangé...
 
@@ -202,6 +201,8 @@ function sortImages() {
 // Appelez cette fonction chaque fois que vous souhaitez trier les images
 
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const thumbnail = document.getElementById('thumbnail');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -229,185 +230,34 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
-
-
-
-
-
-
 jQuery(document).ready(function($) {
-    // Ouvrir la lightbox
-    $('.open-contact-popup').on('click', function(e) {
-        e.preventDefault();
-        $('#contact-popup-overlay').fadeIn(); // Afficher l'overlay avec le formulaire
-    });
-
-    // Fermer la lightbox en cliquant sur la croix ou l'overlay
-    $('#close-popup, #contact-popup-overlay').on('click', function(e) {
-        if ($(e.target).is('#close-popup') || $(e.target).is('#contact-popup-overlay')) {
-            $('#contact-popup-overlay').fadeOut(); // Masquer l'overlay
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const overlay = document.getElementById('contact-popup-overlay');
-    const closeOverlayButton = document.getElementById('close-popup-overlay');
-
-    // Fermer la lightbox en cliquant sur la croix
-    closeOverlayButton.addEventListener('click', function () {
-        overlay.style.display = 'none';
-    });
-
-    // Fermer la lightbox en cliquant sur le fond noir (overlay)
-    overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) {
-            overlay.style.display = 'none';
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const overlay = document.getElementById('contact-popup-overlay');
-    const closeOverlayButton = document.getElementById('close-popup-overlay');
-    const openPopupButton = document.getElementById('open-contact-popup');
-
-    // Vérifiez si l'élément "overlay" existe
-    if (overlay) {
-        // Fonction pour désactiver le défilement
-        function disablePageScroll() {
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Fonction pour réactiver le défilement
-        function enablePageScroll() {
-            document.body.style.overflow = '';
-        }
-
-        // Ouvrir la modale
-        if (openPopupButton) {
-            openPopupButton.addEventListener('click', function (e) {
-                e.preventDefault();
-                overlay.style.display = 'flex'; // Afficher l'overlay
-                disablePageScroll(); // Désactiver le défilement
-            });
-        }
-
-        // Fermer la modale en cliquant sur la croix
-        if (closeOverlayButton) {
-            closeOverlayButton.addEventListener('click', function () {
-                overlay.style.display = 'none'; // Masquer l'overlay
-                enablePageScroll(); // Réactiver le défilement
-            });
-        }
-
-        // Fermer la modale en cliquant sur l'overlay
-        overlay.addEventListener('click', function (e) {
-            if (e.target === overlay) {
-                overlay.style.display = 'none'; // Masquer l'overlay
-                enablePageScroll(); // Réactiver le défilement
+    // Détecter un changement dans les menus déroulants
+    $('#category-filter, #format-filter, #date-filter').change(function() {
+        // Obtenir les valeurs des filtres
+        var category = $('#category-filter').val();
+        var format = $('#format-filter').val();
+        var date = $('#date-filter').val();
+        
+        // Appeler la fonction AJAX avec les paramètres
+        $.ajax({
+            url: ajax_vars.ajaxurl, // Utiliser ajax_vars.ajaxurl pour l'URL de l'AJAX
+            type: 'POST',
+            data: {
+                action: 'filter_photos', // Action AJAX
+                nonce: ajax_vars.nonce, // Le nonce pour la sécurité
+                category: category,
+                format: format,
+                date: date
+            },
+            success: function(response) {
+                // Afficher les photos retournées par la requête AJAX
+                $('#photos-container').html(response);
             }
         });
-    } else {
-        console.error("L'élément #contact-popup-overlay est introuvable.");
-    }
-});
-
-jQuery(document).ready(function($) {
-    $('select').select2();
+    });
 });
 
 
 
 
-
-
-function filterImages() {
-    // Réinitialiser currentPage à 1
-    currentPage = 1;
-    document.getElementById('image-gallery').innerHTML = ''; // Réinitialiser la galerie
-
-    // Charger les images après filtrage
-    loadImages();
-
-    // Vérifier si plus d'images sont disponibles
-    let filteredImages = filterImagesList(images);
-    let totalItems = filteredImages.length;
-    let totalPages = Math.ceil(totalItems / itemsPerPage);
-
-    if (currentPage >= totalPages) {
-        // Si nous avons atteint la dernière page, masquer le bouton
-        document.getElementById('second-next-button').style.display = 'none';
-        document.getElementById('no-more-images').style.display = 'block'; // Afficher le message "Il n'y a plus d'images à charger"
-    } else {
-        // Sinon, afficher le bouton "Charger plus"
-        document.getElementById('second-next-button').style.display = 'inline-block';
-        document.getElementById('no-more-images').style.display = 'none'; // Masquer le message
-    }
-}
-
-function loadImages() {
-    let gallery = document.getElementById('image-gallery');
-    let filteredImages = filterImagesList(images);
-
-    let totalItems = filteredImages.length;
-    let totalPages = Math.ceil(totalItems / itemsPerPage);
-
-    let startIndex = (currentPage - 1) * itemsPerPage;
-    let endIndex = startIndex + itemsPerPage;
-    let imagesToDisplay = filteredImages.slice(startIndex, endIndex);
-
-    imagesToDisplay.forEach((image) => {
-        let div = document.createElement('div');
-        div.className = 'image-item';
-        div.style.backgroundImage = 'url("' + image.src + '")';
-        div.style.backgroundSize = 'cover';
-        div.style.backgroundPosition = 'center';
-        div.style.height = '495px';
-        div.innerHTML = `
-            <div class="image-title">${image.title}</div>
-            <div class="image-category">${image.category}</div>
-            <div class="fullscreen-icon" onclick="openLightbox(${image.id})">⛶</div>
-            <a href="${image.pageUrl}" class="eye-icon" target="_blank">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/Eye.png" alt="Eye Icon" class="eye-image">
-
-
-            </a>
-        `;
-        gallery.appendChild(div);
-    });
-
-    let observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.image-item').forEach(item => {
-        observer.observe(item);
-    });
-}
-
-function loadMoreImagesAjax() {
-    // Vérifier s'il reste des pages
-    let filteredImages = filterImagesList(images);
-    let totalItems = filteredImages.length;
-    let totalPages = Math.ceil(totalItems / itemsPerPage);
-
-    if (currentPage < totalPages) {
-        currentPage++; // Incrémenter la page pour charger plus d'images
-        loadImages(); // Charger plus d'images
-    }
-
-    // Si nous avons atteint la dernière page, masquer le bouton
-    if (currentPage >= totalPages) {
-        document.getElementById('second-next-button').style.display = 'none';
-        document.getElementById('no-more-images').style.display = 'block'; // Afficher "Il n'y a plus d'images"
-    }
-}
 
