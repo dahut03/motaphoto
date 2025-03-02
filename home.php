@@ -59,7 +59,7 @@ get_header(); // Inclut le header du thème
         <!-- Catégorie -->
         <div class="filter-group-categorie">
             <div>Catégorie</div> <!-- Titre au-dessus -->
-            <select id="category-filter" onchange="filterImages()">
+            <select id="category-filter" class="select2" onchange="filterImages()">
                 <option value="all"></option>
                 <?php foreach ($categories as $category) : ?>
                     <option value="<?php echo esc_attr($category->slug); ?>">
@@ -72,7 +72,7 @@ get_header(); // Inclut le header du thème
         <!-- Format -->
         <div class="filter-group-format">
             <div>Format</div> <!-- Titre au-dessus -->
-            <select id="format-filter" onchange="filterImages()">
+            <select id="format-filter" class="select2" onchange="filterImages()">
                 <option value="all"></option>
                 <?php foreach ($formats as $format) : ?>
                     <option value="<?php echo esc_attr($format->slug); ?>">
@@ -85,7 +85,7 @@ get_header(); // Inclut le header du thème
         <!-- Date -->
         <div class="filter-group date-filter">
             <div>Date</div> <!-- Titre au-dessus -->
-            <select id="date-filter" onchange="filterImages()">
+            <select id="date-filter" class="select2" onchange="filterImages()">
                 <option value="newest"></option>
                 <option value="newest">Les plus récentes</option>
                 <option value="oldest">Les plus anciennes</option>

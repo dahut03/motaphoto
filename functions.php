@@ -851,3 +851,67 @@ add_action('wp_enqueue_scripts', function() {
         wpcf7_enqueue_styles();
     }
 });
+
+
+function ajouter_select2_local() {
+    // CSS local
+    wp_enqueue_style('select2-css', get_template_directory_uri() . '/../oceanwp-child/assets/css/select2.min.css');
+    
+    // JS local
+    wp_enqueue_script('select2-js', get_template_directory_uri() . '/../oceanwp-child//assets/js/select2.min.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'ajouter_select2_local');
+
+
+
+
+add_action('wp_ajax_load_more_images', 'load_more_images_callback');
+add_action('wp_ajax_nopriv_load_more_images', 'load_more_images_callback');
+
+function load_more_images_callback() {
+    $page = isset($_POST['page']) ? (int) $_POST['page'] : 1;
+    $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : 'all';
+    $format = isset($_POST['format']) ? sanitize_text_field($_POST['format']) : 'all';
+    $date = isset($_POST['date']) ? sanitize_text_field($_POST['date']) : 'newest';
+
+    $args = array(
+        'post_type' => 'photo',
+        'posts_per_page' => 10,
+        'paged' => $page,
+        'orderby' => 'date',
+        'order' => $date == 'oldest' ? 'ASC' : 'DESC',
+    );
+
+    if ($category && $category != 'all') {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'categorie',
+                'field' => 'slug',
+                'terms' => $category,
+            ),
+        );
+    }
+
+    if ($format && $format != 'all') {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'format',
+            'field' => 'slug',
+            'terms' => $format,
+        );
+    }
+
+    $query = new WP_Query($args);
+    
+    $images = array();
+    while ($query->have_posts()) {
+        $query->the_post();
+        $images[] = array(
+            'src' => get_the_post_thumbnail_url(),
+            'title' => get_the_title(),
+        );
+    }
+    
+    wp_reset_postdata();
+
+    wp_send_json_success(array('images' => $images));
+}
